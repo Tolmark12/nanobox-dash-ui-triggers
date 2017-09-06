@@ -1,0 +1,14 @@
+.if, .then            {background: white; display:flex; align-items: center; height:50px; }
+
+// Any .txt element not a direct child of a lexi dropdown trigger..
+:not(.trigger) > .txt {margin:0 10px; }
+.btn                  {cursor:pointer; }
+.btn.adder            {display:flex; align-items: center;  font-style:normal; font-size:12px; font-weight:bold; text-transform:uppercase;  letter-spacing: 0.04em; margin-right:10px; margin-left:auto;
+  &:hover .txt        {color:$azul}
+  .txt                {margin-left:10px;}
+}
+.condition,
+.action               {display:flex; align-items: center; height:60px; padding:0 14px 0 30px; border-bottom:solid 1px #B7C3CF;
+  &:last-of-type      {border-bottom: none; }
+  .btn.deleter        {margin-left:auto; cursor: pointer; }
+}

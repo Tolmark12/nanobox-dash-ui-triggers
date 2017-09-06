@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Generator: Adobe Illustrator 21.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 200 200" style="enable-background:new 0 0 200 200;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:none;stroke:#7C98AB;stroke-width:2;stroke-miterlimit:10;}
+	.st1{fill:none;stroke:#1EB8FF;stroke-width:2;stroke-miterlimit:10;}
+	.st2{fill:none;stroke:#FFFFFF;stroke-width:2;stroke-miterlimit:10;}
+	.st3{fill:#7C98AB;}
+	.st4{fill:none;stroke:#FFFFFF;stroke-width:3;stroke-miterlimit:10;}
+</style>
+<g id="duplicate-trigger_x60_15x15">
+	<polyline class="st0" points="2.938,9.551 1,9.551 1,1 9.551,1 9.551,2.938 	"/>
+	<rect x="5.218" y="5.218" class="st0" width="8.551" height="8.551"/>
+</g>
+<g id="add-condition_x60_14x14">
+	<line class="st1" x1="6.779" y1="0" x2="6.779" y2="13.559"/>
+	<line class="st1" x1="13.559" y1="6.779" x2="0" y2="6.779"/>
+</g>
+<g id="condition-x_x60_16x16">
+	<polyline class="st2" points="0.707,0.707 7.782,7.782 14.857,14.857 	"/>
+	<line class="st2" x1="14.857" y1="0.707" x2="0.707" y2="14.857"/>
+</g>
+<g id="disable-trigger_x60_16x16">
+	<line class="st0" x1="2.727" y1="12.179" x2="12.594" y2="3.262"/>
+	
+		<ellipse transform="matrix(0.0505 -0.9987 0.9987 0.0505 -0.3786 14.9853)" class="st0" cx="7.692" cy="7.692" rx="6.692" ry="6.692"/>
+</g>
+<g id="delete-trigger_x60_12x12">
+	<polyline class="st0" points="0.707,0.707 5.857,5.857 0.707,11.007 	"/>
+	<polyline class="st0" points="11.007,0.707 5.857,5.857 11.007,11.007 	"/>
+</g>
+<g id="then-arrow_x60_26x26">
+	<circle class="st3" cx="12.779" cy="12.779" r="12.779"/>
+	<polyline class="st4" points="10.232,5.868 17.172,12.808 10.232,19.748 	"/>
+</g>
+</svg>
