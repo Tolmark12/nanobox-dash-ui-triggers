@@ -39,8 +39,8 @@ export default {
 -->
 
 <style lang="scss" scoped>
-  .global-actions {display:flex; align-items: center; justify-content: flex-end;
-    .item         {display:flex; align-items: center; margin-left:25px; padding-top:10px; cursor:pointer;
+  .global-actions {display:flex; align-items: center;
+    .item         {display:flex; align-items: center; padding-top:10px; cursor:pointer;
       &:hover     {
         .txt      {color:#264153;}
       }

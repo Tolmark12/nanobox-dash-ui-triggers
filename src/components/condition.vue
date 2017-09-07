@@ -1,27 +1,22 @@
 <script>
-import {dropdown} from 'lexi'
 import resource from './conditions/resource'
+import timeEvent from './conditions/time-event'
+
+import {dropdown} from 'lexi'
+import {EventBus} from '../event-bus'
 export default {
   name: 'condition',
-  components:{dropdown, resource},
-  data() {
-    return{
-      kind:"resource"
-    }
-  },
+  components:{dropdown, resource, timeEvent},
+  props:['condition'],
   methods:{
-    onDelete() {
-      console.log( 'delete rule' )
-    },
-    onTriggerKindChange(newKind) {
-      switch (newKind){
-        case "ram.exceeds":
-        case "cpu.exceeds":
-        case "disk.exceeds":
-        case "swap.exceeds":
-          this.kind = "resource"
-          break
-      }
+    deleteClick() { EventBus.$emit('condition.delete', this.condition.id) },
+    getKind() {
+      if(this.condition.kind.indexOf('resource.') !== -1)
+        return 'resource'
+      else if(this.condition.kind.indexOf('time.') !== -1)
+        return 'time'
+      else
+        return ''
     }
   },
   mounted(){ castShadows(this.$el[0]); }
@@ -35,17 +30,19 @@ export default {
 
 <template lang="pug">
   .condition
-    dropdown(slot="options" v-on:changed="onTriggerKindChange")
-      .option(value="ram.exceeds") RAM usage exceeds
-      .option(value="cpu.exceeds") CPU usage exceeds
-      .option(value="disk.exceeds") Disk usage exceeds
-      .option(value="swap.exceeds") Swap usage exceeds
+    dropdown(slot="options" v-model="condition.kind")
+      .option(value="resource.ram") RAM usage
+      .option(value="resource.cpu") CPU usage
+      .option(value="resource.disk") Disk usage
+      .option(value="resource.swap") Swap usage
       .option(value="time.is") Time is
 
     //- If resource
-    resource(v-if="kind == 'resource'" )
+    resource(v-if="getKind() == 'resource'" :model="condition.details" )
+    time-event(v-else-if="getKind() == 'time'" )
 
-    .btn.deleter(v-on:click="onDelete" )
+
+    .btn.deleter(@click="deleteClick" )
       img.shadow-icon(data-src="condition-x")
 </template>
 

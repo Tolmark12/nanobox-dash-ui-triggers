@@ -1,11 +1,10 @@
 <script>
+import {EventBus} from '../event-bus'
 export default {
   name: 'actions-header',
   mounted(){ castShadows(this.$el[0]); },
   methods:{
-    onAddTrigger() {
-      console.log( 'add an action' )
-    }
+    onAddTrigger() { EventBus.$emit('action.new') }
   }
 }
 </script>
@@ -18,7 +17,7 @@ export default {
   .then
     img.shadow-icon(data-src="then-arrow")
     .txt Then trigger the following actions :
-    .btn.adder(v-on:click="onAddTrigger" )
+    .btn.adder(@click="onAddTrigger" )
       img.shadow-icon(data-src="add-condition")
       .txt Add an Action
 </template>

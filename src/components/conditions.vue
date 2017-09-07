@@ -3,7 +3,7 @@ import conditionsHeader from './conditions-header'
 import condition from './condition'
 export default {
   name: 'conditions',
-  props: ['config'],
+  props: ['model'],
   components: {conditionsHeader, condition}
 }
 </script>
@@ -14,9 +14,9 @@ export default {
 
 <template lang="pug">
   .conditions
-    conditions-header(:config="config")
+    conditions-header(:model="model")
     .rules
-      condition
+      condition(v-for="(condition, i) in model.trigger.conditions" :key="i" :condition="condition")
 </template>
 
 <!--

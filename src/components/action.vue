@@ -1,10 +1,9 @@
 <script>
+import {EventBus} from '../event-bus'
 export default {
   name: 'action',
   methods:{
-    onDelete() {
-      console.log( 'delete action' )
-    }
+    onDelete() { EventBus.$emit('action.delete') }
   },
   mounted(){ castShadows(this.$el[0]); }
 
@@ -17,7 +16,7 @@ export default {
 
 <template lang="pug">
   .action
-    .btn.deleter(v-on:click="onDelete" )
+    .btn.deleter(@click="onDelete" )
       img.shadow-icon(data-src="condition-x")
 </template>
 

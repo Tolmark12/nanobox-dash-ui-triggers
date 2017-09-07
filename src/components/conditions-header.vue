@@ -1,26 +1,21 @@
 <script>
 import {dropdown} from 'lexi'
+import {EventBus} from '../event-bus'
+
 export default {
   name: 'conditions-header',
   components:{dropdown},
-  props: ['config'],
+  props: ['model'],
   data() {
-    console.log( this.config.hosts.length > 0 )
     return{
-      hasHosts      : this.config.hosts.length > 0,
-      hasComponents : this.config.components.length > 0
+      hasHosts      : this.model.hosts.length > 0,
+      hasComponents : this.model.components.length > 0
     }
   },
   methods:{
-    onScopeChange(scope){
-      console.log( `scope changed to : ${scope}` )
-    },
-    addCondition() {
-      console.log( "add condition" )
-    },
-    onContextChange(context) {
-      console.log( `context changed to : ${context}` )
-    },
+    onScopeChange(newScope){ EventBus.$emit('trigger.change-scope', newScope) },
+    addCondition() { EventBus.$emit('condition.new') },
+    onContextChange(context) { EventBus.$emit('trigger.change-context', context) },
   },
   mounted(){ castShadows(this.$el[0]); }
 
@@ -33,16 +28,16 @@ export default {
 
 <template lang="pug">
 .if
-  dropdown(slot="options" v-on:changed="onScopeChange" default="any")
+  dropdown(slot="options" @changed="onScopeChange" v-model="model.trigger.conditionScope")
     .option(value="any") Any
     .option(value="all") All
   .txt of the following conditions are true for :
-  dropdown(slot="options" v-on:changed="onContextChange")
+  dropdown(slot="options" v-on:changed="onContextChange" v-model="model.trigger.context")
     .label(v-show="hasHosts" ) Hosts
-    .option(v-for="(host, i) in config.hosts" :key="i" :value="host.id") {{host.name}}
+    .option(v-for="(host, i) in model.hosts" :key="i" :value="host.id") {{host.name}}
     .option(v-if="hasHosts" value="any.host") any host
     .label Components
-    .option(v-for="(component, i) in config.components" :key="i" :value="component.id") {{component.name}}
+    .option(v-for="(component, i) in model.components" :key="i" :value="component.id") {{component.name}}
     .option(value="any.component") any component
 
   //- dropdown(slot="options" v-on:changed="onScopeChange" default="any")

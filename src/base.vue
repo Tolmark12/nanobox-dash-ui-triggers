@@ -1,11 +1,18 @@
 <script type="text/babel">
 import trigger from './components/trigger'
-
+import TriggerModel from './trigger-model'
 export default {
   name: 'triggers',
-  props:['config'],
+  props:['model', 'callbacks'],
   components:{trigger},
+  data() {
+    console.log( this.callbacks )
+    return {
+      triggerModel : new TriggerModel(this.model)
+    }
+  },
   methods:{},
+
 }
 </script>
 
@@ -14,7 +21,7 @@ export default {
 -->
 
 <template lang="pug">
-  trigger(:config="config")
+  trigger(:model="triggerModel" :callbacks="callbacks")
 </template>
 
 <!--

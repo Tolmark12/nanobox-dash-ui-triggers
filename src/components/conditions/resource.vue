@@ -1,7 +1,10 @@
 <script>
 import {dropdown} from 'lexi';
+import {EventBus} from '../../event-bus'
+
 export default {
   name: 'resource',
+  props:['model'],
   components:{dropdown},
   data() {
     return{
@@ -13,10 +16,13 @@ export default {
 
     },
     onDurationChange(newDuration){
-      this.changeDuration = newDuration;
+
     },
     onTimeMeasureChange(newTimeMeasure) {
 
+    },
+    onConditionDetailChange() {
+      EventBus.$emit('condition.changed')
     }
   }
 }
@@ -28,16 +34,19 @@ export default {
 
 <template lang="pug">
   .resource
-    input.ammount
-    dropdown(slot="options" v-on:changed="onMeasureKindChange")
+    dropdown(slot="options" v-model='model.direction' @changed="onConditionDetailChange")
+      .option(value="exceeds") exceeds
+      .option(value="drops-below") drops below
+    input.ammount(v-model="model.limit" @input="onConditionDetailChange")
+    dropdown(slot="options" @changed="onConditionDetailChange" v-model="model.unit")
       .option(value="perc") %
       .option(value="mb") MB
       .option(value="gb") GB
-    dropdown(slot="options" v-on:changed="onDurationChange")
-      .option(value="instantly") ever
-      .option(value="duration") for more than
-    input(v-if="changeDuration != 'instantly'" ).duration
-    dropdown(v-if="changeDuration != 'instantly'" slot="options" v-on:changed="onTimeMeasureChange")
+    dropdown(slot="options" v-model="model.doMeasureDuration" @changed="onConditionDetailChange")
+      .option(value="false") ever
+      .option(value="true") for more than
+    input(v-if="model.doMeasureDuration == 'true'" v-model='model.duration' @input="onConditionDetailChange").duration
+    dropdown(v-if="model.doMeasureDuration == 'true'" slot="options" @changed="onConditionDetailChange" v-model='model.durationMetric')
       .option(value="seconds") seconds
       .option(value="minutes") minutes
       .option(value="hours") hours
@@ -49,7 +58,7 @@ export default {
 -->
 
 <style lang="scss" scoped>
-  .resource {display: flex;
+  .resource {display: flex; align-items: center;
     > *  {margin:0 5px;}
     input{height:30px; border-radius:4px; margin:0 10px; padding-right:0;
       &.ammount{ width:50px; }
