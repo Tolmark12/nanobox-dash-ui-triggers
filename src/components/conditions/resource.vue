@@ -4,7 +4,7 @@ import {EventBus} from '../../event-bus'
 
 export default {
   name: 'resource',
-  props:['model'],
+  props:['model', 'resource-model'],
   components:{dropdown},
   data() {
     return{

@@ -3,6 +3,7 @@ import actionsHeader from './actions-header'
 import action from './action'
 export default {
   name: 'actions',
+  props: ['model'],
   components:{actionsHeader, action},
 }
 </script>
@@ -14,7 +15,7 @@ export default {
 <template lang="pug">
   .actions
     actions-header
-    action
+    action(v-for="(action, i) in model.data.trigger.actions" :key="i" :action-data="action")
 </template>
 
 <!--
@@ -22,6 +23,5 @@ export default {
 -->
 
 <style lang="scss" scoped>
-  .actions {
-  }
+  .actions {}
 </style>

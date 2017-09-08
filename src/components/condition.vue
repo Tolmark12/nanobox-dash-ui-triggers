@@ -7,7 +7,7 @@ import {EventBus} from '../event-bus'
 export default {
   name: 'condition',
   components:{dropdown, resource, timeEvent},
-  props:['condition'],
+  props:['condition', 'model'],
   methods:{
     deleteClick() { EventBus.$emit('condition.delete', this.condition.id) },
     getKind() {
@@ -33,8 +33,8 @@ export default {
     dropdown(slot="options" v-model="condition.kind")
       .option(value="resource.ram") RAM usage
       .option(value="resource.cpu") CPU usage
-      .option(value="resource.disk") Disk usage
-      .option(value="resource.swap") Swap usage
+      .option(v-show="model.isHost" value="resource.disk") Disk usage
+      .option(v-show="model.isHost" value="resource.swap") Swap usage
       .option(value="time.is") Time is
 
     //- If resource

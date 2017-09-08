@@ -2,7 +2,10 @@ import {EventBus} from './event-bus'
 import _ from 'lodash'
 export default class TriggerModel {
 
-  constructor(origData) {
+  constructor(origData, dontBuild=false) {
+    if( dontBuild )
+      return
+
     this.originalData = origData
     this.data         = _.cloneDeep(origData, false)
     this.isDirty      = false
@@ -13,8 +16,10 @@ export default class TriggerModel {
     EventBus.$on('condition.new'         , this.addCondition);
     EventBus.$on('condition.delete'      , this.deleteCondition);
     EventBus.$on('condition.changed'     , this.checkDataState);
-    EventBus.$on('trigger.change-context', this.checkDataState);
+    EventBus.$on('trigger.change-context', this.changeTriggerContext);
     EventBus.$on('trigger.change-scope'  , this.checkDataState);
+
+    this.setIsHost()
   }
 
   // ------------------------------------ Conditions
@@ -33,11 +38,20 @@ export default class TriggerModel {
   // ------------------------------------ Actions
 
   deleteAction = (id)=> {
-    console.log( "delete action. NOTE: we still need to create / pass the action's id" )
+    let index = _.findIndex(this.data.trigger.actions, {'id':id} )
+    this.data.trigger.actions.splice( index, 1 )
+    this.checkDataState()
   }
 
   addAction = ()=> {
-    console.log( "lets add a brand spanking new action" )
+    this.data.trigger.actions.push(this.getBlankAction())
+  }
+
+  // ------------------------------------ Triggers
+
+  changeTriggerContext = (newContext)=> {
+    this.checkDataState()
+    this.setIsHost()
   }
 
   // ------------------------------------ Getters / Setters
@@ -46,8 +60,23 @@ export default class TriggerModel {
 
   // ------------------------------------ Helpers
 
+  setIsHost() {
+    this.isHost =  _.find(this.data.hosts, {id: this.data.trigger.context}) !== undefined
+  }
+
   checkDataState = ()=> {
     this.isDirty = ! _.isEqual(this.originalData, this.data)
+  }
+
+  getBlankAction() {
+    return{
+      id:`c-${Date.now().toString(36)}`,
+      kind: 'message',
+      details:{
+        messageType:'email',
+        messageTarget:'all'
+      }
+    }
   }
 
   getBlankCondition() {

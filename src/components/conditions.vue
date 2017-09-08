@@ -1,10 +1,14 @@
 <script>
 import conditionsHeader from './conditions-header'
 import condition from './condition'
+import _ from 'lodash'
 export default {
   name: 'conditions',
   props: ['model'],
-  components: {conditionsHeader, condition}
+  components: {conditionsHeader, condition},
+  methods:{
+
+  }
 }
 </script>
 
@@ -14,9 +18,9 @@ export default {
 
 <template lang="pug">
   .conditions
-    conditions-header(:model="model")
+    conditions-header(:model="model.data")
     .rules
-      condition(v-for="(condition, i) in model.trigger.conditions" :key="i" :condition="condition")
+      condition(v-for="(condition, i) in model.data.trigger.conditions" :key="i" :condition="condition" :model="model")
 </template>
 
 <!--

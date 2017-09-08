@@ -1,13 +1,16 @@
+import Model from '../src/trigger-model.js'
+
 export default class TriggerShim{
   constructor() {
     this.conditionCount = 0
+    this.model = new Model({}, true)
   }
 
   getShimData() {
     return{
-      hosts      : this.getHosts(),
-      components : this.getComponents(),
-      trigger    : this.getTrigger(),
+      hosts          : this.getHosts(),
+      components     : this.getComponents(),
+      trigger        : this.getTrigger(),
     }
   }
 
@@ -32,38 +35,18 @@ export default class TriggerShim{
 
   getTrigger() {
     return {
+      name:"My Trigger",
+      id:"abce1234",
       conditionScope: "all",  // any, all
       context: 'web.main',    // id, all-components, all-hosts
       conditions:[
-        this.getUsageCondition(),
-        this.getUsageCondition(),
-        this.getUsageCondition()
+        this.model.getBlankCondition(),
+        this.model.getBlankCondition(),
+        this.model.getBlankCondition()
       ],
       actions:[
-        this.getAction()
+        this.model.getBlankAction()
       ]
-    }
-  }
-
-  getUsageCondition() {
-    return {
-      id:`c-${Date.now().toString(36) + this.conditionCount++}`,
-      kind:'resource.cpu',
-      details:{
-        resource:'ram',
-        direction:'exceeds',
-        limit:'80',
-        unit:'perc',
-        doMeasureDuration:'false',
-        duration:'10',
-        durationMetric:'minutes',
-      }
-    }
-  }
-
-  getAction() {
-    return {
-
     }
   }
 }

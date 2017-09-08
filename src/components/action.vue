@@ -1,9 +1,13 @@
 <script>
 import {EventBus} from '../event-bus'
+import {dropdown} from 'lexi'
+import message from './actions/message'
 export default {
-  name: 'action',
-  methods:{
-    onDelete() { EventBus.$emit('action.delete') }
+  name       : 'action',
+  props      : ['action-data'],
+  components : {dropdown, message},
+  methods    : {
+    onDelete() { EventBus.$emit('action.delete', this.actionData.id) }
   },
   mounted(){ castShadows(this.$el[0]); }
 
@@ -16,6 +20,12 @@ export default {
 
 <template lang="pug">
   .action
+    dropdown(v-model="actionData.kind")
+      .option(value='message') Send
+      .option(value='script') Run Script
+
+    message(v-if="actionData.kind == 'message'" :params='actionData.details')
+
     .btn.deleter(@click="onDelete" )
       img.shadow-icon(data-src="condition-x")
 </template>
@@ -25,5 +35,5 @@ export default {
 -->
 
 <style lang="scss" scoped>
-  .action {}
+  .action {display: flex; align-items: center; }
 </style>

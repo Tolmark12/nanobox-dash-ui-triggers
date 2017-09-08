@@ -1,12 +1,18 @@
 <script>
-import conditions    from './conditions'
-import actions       from './actions'
-import globalActions from './global-actions'
-import saveSection   from './save-section'
+import conditions            from './conditions'
+import actions               from './actions'
+import globalActions         from './global-actions'
+import {errors, saveSection} from 'lexi'
+
 export default {
   name: 'trigger',
-  components: {conditions, actions, globalActions, saveSection},
+  components: {conditions, actions, globalActions, saveSection, errors},
   props:['model', 'callbacks'],
+  data() {
+    return{
+      errors:null
+    }
+  },
   methods:{
     onSave() {
       this.callbacks.save( model.flatData, ()=>{
@@ -15,6 +21,7 @@ export default {
     },
     onCancel() {
       console.log( 'cancel' )
+      this.errors = "asdf"
     }
   }
 }
@@ -26,9 +33,13 @@ export default {
 
 <template lang="pug">
   .trigger
+    errors(:errors="errors")
+    .name
+      .label Name:
+      input(v-model="model.data.trigger.name")
     .main-content
-      conditions(:model="model.data")
-      actions
+      conditions(:model="model")
+      actions(:model="model")
     .bottom.blue-item
       global-actions
       save-section(@save="onSave" @cancel="onCancel" v-if="model.isDirty" )
@@ -40,7 +51,11 @@ export default {
 
 <style lang="scss" scoped>
   .trigger        {width:100%; display:flex; flex-direction: column; font-size:16px; color:#7C98AB; font-weight:$semibold; font-style:italic;
+    .name         {margin:20px 0; width: 100%;
+      .label      {@include caps(#80878C, 12px); margin-bottom:5px; }
+      input       {width:100%; height:35px; border-radius: 4px;}
+    }
     .main-content {background:#D7DFE6;}
+    .bottom{display: flex; justify-content: space-between; min-height:46px; }
   }
-  .bottom{display: flex; justify-content: space-between; min-height:46px; }
 </style>
