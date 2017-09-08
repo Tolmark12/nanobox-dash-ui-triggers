@@ -33,8 +33,8 @@ export default {
     dropdown(slot="options" v-model="condition.kind")
       .option(value="resource.ram") RAM usage
       .option(value="resource.cpu") CPU usage
-      .option(v-show="model.isHost" value="resource.disk") Disk usage
-      .option(v-show="model.isHost" value="resource.swap") Swap usage
+      .option(v-if="model.data.isHost" value="resource.disk") Disk usage
+      .option(v-if="model.data.isHost" value="resource.swap") Swap usage
       .option(value="time.is") Time is
 
     //- If resource

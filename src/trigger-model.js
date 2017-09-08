@@ -6,6 +6,7 @@ export default class TriggerModel {
     if( dontBuild )
       return
 
+    window.model = this
     this.originalData = origData
     this.data         = _.cloneDeep(origData, false)
     this.isDirty      = false
@@ -61,7 +62,7 @@ export default class TriggerModel {
   // ------------------------------------ Helpers
 
   setIsHost() {
-    this.isHost =  _.find(this.data.hosts, {id: this.data.trigger.context}) !== undefined
+    this.data.isHost =  _.find(this.data.hosts, {id: this.data.trigger.context}) !== undefined
   }
 
   checkDataState = ()=> {
@@ -74,7 +75,8 @@ export default class TriggerModel {
       kind: 'message',
       details:{
         messageType:'email',
-        messageTarget:'all'
+        messageTarget:'all',
+        receipients:'all'
       }
     }
   }
