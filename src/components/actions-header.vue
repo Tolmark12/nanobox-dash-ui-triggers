@@ -15,7 +15,8 @@ export default {
 
 <template lang="pug">
   .then
-    img.shadow-icon(data-src="then-arrow")
+    .arrow
+      img.shadow-icon(data-src="then-arrow")
     .txt Then trigger the following actions :
     .btn.adder(@click="onAddTrigger" )
       img.shadow-icon(data-src="add-condition")
@@ -28,6 +29,6 @@ export default {
 
 <style lang="scss" scoped>
   .then             {
-    > svg           {margin-left:-12px; margin-right:15px; }
+    .arrow          {margin-left:-12px; margin-right:5px; }
   }
 </style>

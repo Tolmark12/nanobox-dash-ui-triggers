@@ -34,19 +34,19 @@ export default {
 
 <template lang="pug">
   .resource
-    dropdown(slot="options" v-model='model.direction' @changed="onConditionDetailChange")
+    dropdown(v-model='model.direction' @changed="onConditionDetailChange")
       .option(value="exceeds") exceeds
       .option(value="drops-below") drops below
     input.ammount(v-model="model.limit" @input="onConditionDetailChange")
-    dropdown(slot="options" @changed="onConditionDetailChange" v-model="model.unit")
+    dropdown(@changed="onConditionDetailChange" v-model="model.unit")
       .option(value="perc") %
       .option(value="mb") MB
       .option(value="gb") GB
-    dropdown(slot="options" v-model="model.doMeasureDuration" @changed="onConditionDetailChange")
+    dropdown(v-model="model.doMeasureDuration" @changed="onConditionDetailChange")
       .option(value="false") ever
       .option(value="true") for more than
     input(v-if="model.doMeasureDuration == 'true'" v-model='model.duration' @input="onConditionDetailChange").duration
-    dropdown(v-if="model.doMeasureDuration == 'true'" slot="options" @changed="onConditionDetailChange" v-model='model.durationMetric')
+    dropdown(v-if="model.doMeasureDuration == 'true'" @changed="onConditionDetailChange" v-model='model.durationMetric')
       .option(value="seconds") seconds
       .option(value="minutes") minutes
       .option(value="hours") hours

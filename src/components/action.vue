@@ -23,6 +23,7 @@ export default {
     dropdown(v-model="actionData.kind")
       .option(value='message') Send
       .option(value='script') Run Script
+      .option(value='post') POST to API
 
     message(v-if="actionData.kind == 'message'" :params='actionData.details')
 

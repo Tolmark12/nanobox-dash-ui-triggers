@@ -16,6 +16,9 @@ let callbacks = {
     console.log( "Saving changes:" )
     console.log( data )
     cb({})
+  },
+  cancel(cb) {
+    cb({error:'This is a test error called on cancel'})
   }
 }
 

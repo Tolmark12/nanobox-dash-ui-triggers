@@ -19,6 +19,7 @@ export default class TriggerModel {
     EventBus.$on('condition.changed'     , this.checkDataState);
     EventBus.$on('trigger.change-context', this.changeTriggerContext);
     EventBus.$on('trigger.change-scope'  , this.checkDataState);
+    EventBus.$on('trigger.name-changed'  , this.checkDataState);
 
     this.setIsHost()
   }
@@ -62,10 +63,14 @@ export default class TriggerModel {
   // ------------------------------------ Helpers
 
   setIsHost() {
-    this.data.isHost =  _.find(this.data.hosts, {id: this.data.trigger.context}) !== undefined
+    if( this.data.trigger.context == 'any.host')
+      this.isHost = true
+    else
+      this.isHost = _.find(this.data.hosts, {id: this.data.trigger.context}) !== undefined
   }
 
   checkDataState = ()=> {
+    console.log( "checking..." )
     this.isDirty = ! _.isEqual(this.originalData, this.data)
   }
 

@@ -3,6 +3,7 @@ import conditions            from './conditions'
 import actions               from './actions'
 import globalActions         from './global-actions'
 import {errors, saveSection} from 'lexi'
+import {EventBus}              from '../event-bus'
 
 export default {
   name: 'trigger',
@@ -15,13 +16,35 @@ export default {
   },
   methods:{
     onSave() {
-      this.callbacks.save( model.flatData, ()=>{
-        console.log( 'save successful' )
+      this.clearErrors()
+      this.callbacks.save( model.flatData, (response)=>{
+        if( !this.checkAndShowErrors(response) )
+          console.log( 'save successful' )
       })
     },
     onCancel() {
-      console.log( 'cancel' )
-      this.errors = "asdf"
+      this.clearErrors()
+      this.callbacks.cancel( (response)=>{
+        if( !this.checkAndShowErrors(response) )
+          console.log( 'cancel successful' )
+      })
+    },
+    // ------------------------------------ Helpers
+
+    // Should we move these to the errors component?
+
+    clearErrors() {
+      this.errors = null
+    },
+    checkAndShowErrors(response) {
+      if( response.error != undefined ){
+        this.errors = response.error
+        return true
+      }else
+        return false
+    },
+    onInput() {
+      EventBus.$emit('trigger.name-changed')
     }
   }
 }
@@ -36,7 +59,7 @@ export default {
     errors(:errors="errors")
     .name
       .label Name:
-      input(v-model="model.data.trigger.name")
+      input(v-model="model.data.trigger.name" @input="onInput")
     .main-content
       conditions(:model="model")
       actions(:model="model")
@@ -56,6 +79,6 @@ export default {
       input       {width:100%; height:35px; border-radius: 4px;}
     }
     .main-content {background:#D7DFE6;}
-    .bottom{display: flex; justify-content: space-between; min-height:46px; }
+    .bottom       {display: flex; justify-content: space-between; min-height:46px; }
   }
 </style>
